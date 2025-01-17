@@ -5,114 +5,116 @@
  * @format
  */
 
-import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import React , {useState} from 'react';
+import { SafeAreaView, Text, StyleSheet, View , Alert  } from 'react-native';
+import {TextInput , Button  ,Card , Title , Provider as PaperProvider } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+const LoginPage = () => {
+    const [email , setEmail] = useState("");
+    const [password , setPassword] = useState("");
+    const navigation = useNavigation();
 
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
+
+    const handleLogin = () => {
+        if(!email || !password) {
+    Alert.alert("Error" , "Please fill in all field")
+            }else {
+    Alert.alert("Success" , `Welcome , ${email}`);
+                }
+            navigation.navigate()
+        };
+
+return (
+    <View style = {styles.container}>
+    <Card style ={styles.card} >
+    <Card.Content>
+    <TextInput
+    label ="Email"
+    value = { email }
+     onChangeText={(text) => setEmail(text)}
+    style={styles.input}
+    keyboardType="email-address"
+    mode="outlined"
+/>
+ <TextInput
+             label="Password"
+             value={password}
+             onChangeText={(text) => setPassword(text)}
+             style={styles.input}
+             secureTextEntry
+             mode="outlined"
+           />
+
+           <Button
+             mode="fill"
+             onPress={handleLogin}
+             style={styles.button}
+             contentStyle={styles.buttonContent}
+           >
+             Login
+           </Button>
+
+
+
+      </Card.Content>
+     </Card>
     </View>
-  );
-}
+    );
 
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+    };
+// end of loginFunction
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
 
+
+
+
+// Main App Component
+const App = () => {
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
+      <SafeAreaView style={styles.container}>
+    <PaperProvider>
+      <LoginPage />
+    </PaperProvider>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  container: {
+    flex: 1,
+     justifyContent: "center",
+        alignItems: "center",
+    backgroundColor: '#f8f9fa',
   },
-  sectionTitle: {
+  content: {
+    flex: 1,
+    justifyContent: 'start',
+    alignItems: 'center',
+  },
+  title: {
     fontSize: 24,
-    fontWeight: '600',
+    fontWeight: 'bold',
+    color: '#333',
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
+ card: {
+        backgroundColor: '#f8f9fa',
+        padding: 20, // Adds padding inside the card
+        alignSelf: "center", // Ensures the card adjusts to its content and centers itself
   },
-  highlight: {
-    fontWeight: '700',
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#333",
+    marginBottom: 16,
+    textAlign: "center",
   },
+    input: {
+      marginBottom: 16,
+      width: 250, // Optional: Set consistent width for inputs
+    },
+
 });
 
 export default App;
