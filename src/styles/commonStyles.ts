@@ -10,6 +10,8 @@ const  commonStyles = StyleSheet.create ({
          fontSize :24,
          fontWeight :'bold',
          color :'#333'
+        marginBottom: 16,
+       textAlign: "center",
 
          },
     input : {
@@ -35,6 +37,12 @@ const  commonStyles = StyleSheet.create ({
     fontSize: 16,
     fontWeight: 'bold',
     color: '#fff',
+  },
+
+ card: {
+        backgroundColor: '#f8f9fa',
+        padding: 20, // Adds padding inside the card
+        alignSelf: "center", // Ensures the card adjusts to its content and centers itself
   },
 
     });
